@@ -7,6 +7,7 @@ package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
 import ec.edu.espol.model.Paciente;
+import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.Sintoma;
 import ec.edu.espol.model.Turno;
 import ec.edu.espol.model.Usuario;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.ResourceBundle;
@@ -44,7 +46,10 @@ public class VentanaFXMLController implements Initializable {
     private ComboBox cbxG;
     @FXML
     private ComboBox cbxS;
-
+    
+    Queue<Puesto> puestos = Puesto.leer("puestos.ser");
+    Map<String , Sintoma> sintomas = Sintoma.leer("sintomas.ser");
+    ArrayList<Turno> turnos = Turno.leer("turnos.ser");
     /**
      * Initializes the controller class.
      */
@@ -145,8 +150,16 @@ public class VentanaFXMLController implements Initializable {
             a.show();
           
             }else{
-            Paciente paciente = new Paciente(nombre.getText(),apellido.getText(),Integer.parseInt(edad.getText()),cbxG.getValue().toString().charAt(0),cbxS.getValue().toString());
-            try{               
+            
+            Paciente paciente = new Paciente(nombre.getText(),apellido.getText(),Integer.parseInt(edad.getText()),cbxG.getValue().toString().charAt(0),sintomas.get(cbxS.getValue().toString()));
+            try{
+                Puesto p = puestos.poll();
+                Turno turno = new Turno("A10",p,paciente);
+                //p.getTurnos().offer(turno);
+                puestos.offer(p);
+                turnos.add(turno);
+                Turno.guardar(turnos, "turnos.ser");
+                
                 ArrayList<Usuario> pacientes = Paciente.leer("pacientes.ser");
                 pacientes.add(paciente);
                 Paciente.guardar(pacientes,"pacientes.ser");             
@@ -180,14 +193,6 @@ public class VentanaFXMLController implements Initializable {
     
     public  LinkedList<Paciente> distribuirTurnos(List<Paciente> pacientes, Queue<Turno> turnos) throws ClassNotFoundException{
         PriorityQueue<Paciente> pacientess = new PriorityQueue<>();
-        ArrayList<Sintoma> sintomas = Sintoma.leer("sintomas.ser");
-        for(Sintoma s:sintomas){
-            if(s.equals(cbxS.getValue().toString())){
-                    
-                    
-                    }
-                
-                }        
         
         
         

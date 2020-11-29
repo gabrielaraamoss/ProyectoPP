@@ -15,15 +15,41 @@ import java.util.ArrayList;
 public class Paciente extends Usuario {
     private int edad;
     private char genero;
-    private String sintoma;
+    private Sintoma sintoma;
 
-    public Paciente(String nombre, String apellido, int edad, char genero, String sintoma) {
+    public Paciente(String nombre, String apellido, int edad, char genero, Sintoma sintoma) {
         super(nombre,apellido);
         this.edad = edad;
         this.genero = genero;
         this.sintoma = sintoma;
     }
 
+    public int getEdad() {
+        return edad;
+    }
 
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public char getGenero() {
+        return genero;
+    }
+
+    public void setGenero(char genero) {
+        this.genero = genero;
+    }
+
+    public Sintoma getSintoma() {
+        return sintoma;
+    }
+
+    public void setSintoma(Sintoma sintoma) {
+        this.sintoma = sintoma;
+    }
+
+    
+
+    
     
 }

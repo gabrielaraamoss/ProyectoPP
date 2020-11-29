@@ -5,4 +5,6 @@ module ec.edu.espol.gui {
 
     opens ec.edu.espol.gui to javafx.fxml;
     exports ec.edu.espol.gui;
+    exports ec.edu.espol.controller;
+    exports ec.edu.espol.model;
 }

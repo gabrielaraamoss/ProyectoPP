@@ -13,7 +13,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -50,20 +52,42 @@ public class Sintoma  implements Serializable{
     
     }
     
-    public static ArrayList<Sintoma> leer(String archivo) throws ClassNotFoundException{
-        ArrayList<Sintoma> sintomas=new ArrayList<>();
+    public static Map<String, Sintoma> leer(String archivo){
+        Map<String , Sintoma> sintomasMap = new HashMap<>();
         try(ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))){
-            sintomas=(ArrayList<Sintoma>)es.readObject();
+           ArrayList<Sintoma>   sintomas=(ArrayList<Sintoma>)es.readObject();
+            for (Sintoma s: sintomas){
+                sintomasMap.put(s.getNombre(), s);
+            }
 
         }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }catch(IOException e){
             System.out.println(e.getMessage());
         } 
-        return sintomas;
+        catch(ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        } 
+        return sintomasMap;
       
     }        
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
+    }
+    
       
     @Override
     public String toString() {

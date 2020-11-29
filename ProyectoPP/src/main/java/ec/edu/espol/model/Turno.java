@@ -50,18 +50,46 @@ public class Turno implements Serializable {
     }
     
     
-    public static ArrayList<Turno> leer(String archivo) throws ClassNotFoundException{
+    public static ArrayList<Turno> leer(String archivo) {
         ArrayList<Turno> turnos=new ArrayList<>();
         try(ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))){
             turnos=(ArrayList<Turno>)es.readObject();
-
+            turnos.sort((Turno t1 , Turno t2)-> t2.getPaciente().getSintoma().getPrioridad()-t1.getPaciente().getSintoma().getPrioridad());
         }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }catch(IOException e){
             System.out.println(e.getMessage());
+        } catch(ClassNotFoundException e){
+            System.out.println(e.getMessage());
         } 
         return turnos;
       
-    }       
+    }    
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Puesto getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(Puesto puesto) {
+        this.puesto = puesto;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+    
+    
     
 }

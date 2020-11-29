@@ -5,8 +5,12 @@
  */
 package ec.edu.espol.controller;
 
+import ec.edu.espol.model.Puesto;
+import ec.edu.espol.model.Turno;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,6 +41,8 @@ public class AtencionFXMLController implements Initializable {
     private Label puesto2;
     @FXML
     private Label puesto3;
+    
+    ArrayList<Turno> turnos = Turno.leer("turnos.ser");
 
     /**
      * Initializes the controller class.
@@ -47,6 +53,17 @@ public class AtencionFXMLController implements Initializable {
         int hours  = locaDate.getHour();
         int minutes = locaDate.getMinute();
         tiempo.setText(hours+":"+minutes);
+        Turno t = turnos.get(0);
+        turno1.setText(t.getCodigo());
+        puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
+        t = turnos.get(1);
+        turno2.setText(t.getCodigo());
+        puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
+        t = turnos.get(2);
+        turno3.setText(t.getCodigo());
+        puesto3.setText(String.valueOf(t.getPuesto().getCodigo()));
+        
+        
         
     }    
     
