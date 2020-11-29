@@ -150,7 +150,7 @@ public class VentanaFXMLController implements Initializable {
             a.show();
           
             }else{
-            
+            System.out.println(sintomas.get(cbxS.getValue().toString()));
             Paciente paciente = new Paciente(nombre.getText(),apellido.getText(),Integer.parseInt(edad.getText()),cbxG.getValue().toString().charAt(0),sintomas.get(cbxS.getValue().toString()));
             try{
                 Puesto p = puestos.poll();
@@ -190,14 +190,5 @@ public class VentanaFXMLController implements Initializable {
         
     }
     
-    
-    public  LinkedList<Paciente> distribuirTurnos(List<Paciente> pacientes, Queue<Turno> turnos) throws ClassNotFoundException{
-        PriorityQueue<Paciente> pacientess = new PriorityQueue<>();
-        
-        
-        
-        
-        return null;
 
-    }
 }

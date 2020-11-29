@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class Usuario implements Serializable {
     protected String nombres;
     protected String apellidos;
+    private static final long serialVersionUID = 5L;
 
     public Usuario(String nombres, String apellidos) {
         this.nombres = nombres;

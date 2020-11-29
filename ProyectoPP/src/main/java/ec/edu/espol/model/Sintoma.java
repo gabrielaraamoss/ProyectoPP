@@ -24,6 +24,7 @@ import java.util.Map;
 public class Sintoma  implements Serializable{
     private String nombre;
     private int prioridad;
+    private static final long serialVersionUID = 3L;
 
     public Sintoma(String nombre, int prioridad) {
         this.nombre = nombre;
@@ -56,7 +57,7 @@ public class Sintoma  implements Serializable{
         Map<String , Sintoma> sintomasMap = new HashMap<>();
         try(ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))){
            ArrayList<Sintoma>   sintomas=(ArrayList<Sintoma>)es.readObject();
-            for (Sintoma s: sintomas){
+            for (Sintoma s: sintomas){               
                 sintomasMap.put(s.getNombre(), s);
             }
 

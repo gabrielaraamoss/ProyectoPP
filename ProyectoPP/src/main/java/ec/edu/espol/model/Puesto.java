@@ -27,6 +27,7 @@ public class Puesto implements Serializable {
     private int codigo;
     private PriorityQueue<Turno> turnos;
     private Medico medico;
+    private static final long serialVersionUID = 2L;
 
     public Puesto(int codig, Medico medico) {
         this.codigo = codigo;
@@ -70,7 +71,18 @@ public class Puesto implements Serializable {
         } 
         return puestos;
       
-    }           
+    }
+    
+    public static void eliminar(String codigo, String arhivo){
+        int cod = Integer.parseInt(codigo);
+        Queue<Puesto> puestos =  Puesto.leer(arhivo);
+        for (int i = 0 ; i< puestos.size();i++){
+            Puesto p = puestos.poll();
+            if(p.codigo!=cod){
+                puestos.offer(p);
+            }
+        }
+    }
     
     public int getCodigo() {
         return codigo;

@@ -7,6 +7,7 @@ package ec.edu.espol.controller;
 
 import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.Turno;
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 
 /**
@@ -43,25 +47,35 @@ public class AtencionFXMLController implements Initializable {
     private Label puesto3;
     
     ArrayList<Turno> turnos = Turno.leer("turnos.ser");
+    @FXML
+    private MediaView ventanaVideo;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        File archivo = new File("ComercialMedicamentos.mp4");
+        Media media = new Media(archivo.toURI().toString());
+        MediaPlayer player = new MediaPlayer(media);
+        ventanaVideo.setMediaPlayer(player);
+        player.setAutoPlay(true);
+        
+        
         LocalDateTime locaDate = LocalDateTime.now();
         int hours  = locaDate.getHour();
         int minutes = locaDate.getMinute();
         tiempo.setText(hours+":"+minutes);
         Turno t = turnos.get(0);
+        System.out.println(t);
         turno1.setText(t.getCodigo());
-        puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
-        t = turnos.get(1);
+        /*puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
+        /*t = turnos.get(1);
         turno2.setText(t.getCodigo());
         puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
         t = turnos.get(2);
         turno3.setText(t.getCodigo());
-        puesto3.setText(String.valueOf(t.getPuesto().getCodigo()));
+        puesto3.setText(String.valueOf(t.getPuesto().getCodigo()));*/
         
         
         

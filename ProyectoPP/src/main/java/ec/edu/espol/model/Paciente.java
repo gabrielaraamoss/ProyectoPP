@@ -16,6 +16,7 @@ public class Paciente extends Usuario {
     private int edad;
     private char genero;
     private Sintoma sintoma;
+    private static final long serialVersionUID = 1L;
 
     public Paciente(String nombre, String apellido, int edad, char genero, Sintoma sintoma) {
         super(nombre,apellido);

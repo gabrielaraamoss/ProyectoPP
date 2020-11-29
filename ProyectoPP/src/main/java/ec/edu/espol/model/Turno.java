@@ -22,7 +22,8 @@ public class Turno implements Serializable {
     private String codigo;
     private Puesto puesto;
     private Paciente paciente;
-
+    private static final long serialVersionUID = 4L;
+    
     public Turno(String codigo, Puesto puesto, Paciente paciente) {
         this.codigo = codigo;
         this.puesto = puesto;
@@ -88,6 +89,11 @@ public class Turno implements Serializable {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    @Override
+    public String toString() {
+        return "Turno{" + "codigo=" + codigo + ", puesto=" + puesto + ", paciente=" + paciente + '}';
     }
     
     
