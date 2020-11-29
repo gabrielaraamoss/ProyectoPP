@@ -5,14 +5,19 @@
  */
 package ec.edu.espol.controller;
 
+import ec.edu.espol.model.CircularDoublyLinkedList;
+import ec.edu.espol.model.List;
 import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.Turno;
+import ec.edu.espol.model.Video;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Queue;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -46,26 +51,47 @@ public class AtencionFXMLController implements Initializable {
     @FXML
     private Label puesto3;
     
-    ArrayList<Turno> turnos = Turno.leer("turnos.ser");
+    private ArrayList<Turno> turnos = Turno.leer("turnos.ser");
+    private Thread hiloReloj;
+    private final boolean banderaHilo = true;
+    
     @FXML
     private MediaView ventanaVideo;
 
     /**
      * Initializes the controller class.
      */
+ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        File archivo = new File("ComercialMedicamentos.mp4");
-        Media media = new Media(archivo.toURI().toString());
-        MediaPlayer player = new MediaPlayer(media);
-        ventanaVideo.setMediaPlayer(player);
-        player.setAutoPlay(true);
+        reproducirVideos(Video.leer("videos.txt"));
+        hiloReloj=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                    while(banderaHilo){
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                           LocalDateTime locaDate = LocalDateTime.now();
+                           int hours = locaDate.getHour();
+                           int minutes = locaDate.getMinute();
+                           int seconds = locaDate.getSecond();
+                           tiempo.setText(hours+":"+minutes+":"+seconds);
+                           System.out.println(seconds); 
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);    
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+            
+        });
+        hiloReloj.start();
         
-        
-        LocalDateTime locaDate = LocalDateTime.now();
-        int hours  = locaDate.getHour();
-        int minutes = locaDate.getMinute();
-        tiempo.setText(hours+":"+minutes);
+  
         Turno t = turnos.get(0);
         System.out.println(t);
         turno1.setText(t.getCodigo());
@@ -80,5 +106,17 @@ public class AtencionFXMLController implements Initializable {
         
         
     }    
+    
+    public void reproducirVideos(CircularDoublyLinkedList<String> videos){
+        Iterator it =videos.iterator();
+        String url = it.next().toString();
+        Media media = new Media(new File(url).toURI().toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.setAutoPlay(true);
+        player.setOnEndOfMedia(() -> {
+            reproducirVideos(videos);
+        });
+        ventanaVideo.setMediaPlayer(player);
+    }
     
 }
