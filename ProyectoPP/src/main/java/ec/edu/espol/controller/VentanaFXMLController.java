@@ -7,10 +7,16 @@ package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
 import ec.edu.espol.model.Paciente;
+import ec.edu.espol.model.Sintoma;
+import ec.edu.espol.model.Turno;
 import ec.edu.espol.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -104,6 +110,7 @@ public class VentanaFXMLController implements Initializable {
  
     }
 
+    
     @FXML
     private void registrar(MouseEvent event) {
         if(nombre.getText().isEmpty()||apellido.getText().isEmpty()||cbxS.getValue()==null){
@@ -139,10 +146,10 @@ public class VentanaFXMLController implements Initializable {
           
             }else{
             Paciente paciente = new Paciente(nombre.getText(),apellido.getText(),Integer.parseInt(edad.getText()),cbxG.getValue().toString().charAt(0),cbxS.getValue().toString());
-            try{
+            try{               
                 ArrayList<Usuario> pacientes = Paciente.leer("pacientes.ser");
                 pacientes.add(paciente);
-                Paciente.guardar(pacientes,"pacientes.ser");
+                Paciente.guardar(pacientes,"pacientes.ser");             
             }
             catch(ClassNotFoundException e){
                 ArrayList<Usuario> usuarios = new ArrayList();
@@ -150,15 +157,42 @@ public class VentanaFXMLController implements Initializable {
                 Paciente.guardar(usuarios,"pacientes.ser");
             }
             
+            try {
+                FXMLLoader fxmlloader2 = App.loadFXMLoad("AtencionFXML");
+                App.setRoot(fxmlloader2);
+                AtencionFXMLController controlador=fxmlloader2.getController();
+
+            } catch (IOException ex) {
+                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+                a.show();
+            }   
+            
         }           
-        nombre.clear();
-        apellido.clear();
-        edad.clear();
-        cbxG.setValue("");
-        cbxS.setValue("");        
-        
-        
+//        nombre.clear();
+//        apellido.clear();
+//        edad.clear();
+//        cbxG.setValue("");
+//        cbxS.setValue("");        
+
         
     }
     
+    
+    public  LinkedList<Paciente> distribuirTurnos(List<Paciente> pacientes, Queue<Turno> turnos) throws ClassNotFoundException{
+        PriorityQueue<Paciente> pacientess = new PriorityQueue<>();
+        ArrayList<Sintoma> sintomas = Sintoma.leer("sintomas.ser");
+        for(Sintoma s:sintomas){
+            if(s.equals(cbxS.getValue().toString())){
+                    
+                    
+                    }
+                
+                }        
+        
+        
+        
+        
+        return null;
+
+    }
 }

@@ -19,8 +19,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 /**
  * FXML Controller class
  *
@@ -33,6 +36,22 @@ public class RegistroMedicoFXMLController implements Initializable {
     private TextField apellido;
     @FXML
     private ComboBox cbxS;
+    @FXML
+    private Text tiempo;
+    @FXML
+    private AnchorPane video;
+    @FXML
+    private Label turno1;
+    @FXML
+    private Label turno3;
+    @FXML
+    private Label turno2;
+    @FXML
+    private Label puesto1;
+    @FXML
+    private Label puesto2;
+    @FXML
+    private Label puesto3;
     /**
      * Initializes the controller class.
      */
@@ -60,7 +79,7 @@ public class RegistroMedicoFXMLController implements Initializable {
         
         
     }
-
+    
     @FXML
     private void registroP(MouseEvent event) {
         try {
