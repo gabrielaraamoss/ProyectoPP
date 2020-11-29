@@ -112,14 +112,18 @@ public class AtencionFXMLController implements Initializable {
         
     }    
     
-    public void reproducirVideos(CircularDoublyLinkedList<String> videos){
+    public void reproducirVideos(final CircularDoublyLinkedList<String> videos){
         Iterator it =videos.iterator();
         String url = it.next().toString();
         Media media = new Media(new File(url).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.setAutoPlay(true);
-        player.setOnEndOfMedia(() -> {
-            reproducirVideos(videos);
+        player.setOnEndOfMedia(new Runnable(){
+            @Override
+            public void run(){
+                reproducirVideos(videos);
+            }
+            
         });
         ventanaVideo.setMediaPlayer(player);
     }

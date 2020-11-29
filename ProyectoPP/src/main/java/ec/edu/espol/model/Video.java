@@ -10,7 +10,7 @@ import java.io.FileReader;
 
 /**
  *
- * @author gabrielaramos
+ * @author gabrielaramos 
  */
 public class Video {
     private String nombre;
@@ -23,20 +23,7 @@ public class Video {
         this.nombre = nombre;
     }
     
-    public static CircularDoublyLinkedList<String> leer (String path){
-        CircularDoublyLinkedList<String> videos = new CircularDoublyLinkedList<>();
-        try(FileReader fr = new FileReader(path);
-                BufferedReader br = new BufferedReader(fr)){
-                    String ruta = null;
-                    while ((ruta = br.readLine())!= null){
-                        videos.addFirst(ruta);
-                    }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        
-        }
-        return videos;
-    }
+    
     
     @Override
     public String toString() {
@@ -44,5 +31,22 @@ public class Video {
     }
     
     
+    public Video(String nombre) {
+        this.nombre = nombre;
+    }
     
+ public static CircularDoublyLinkedList<String> leer(String ruta){
+        CircularDoublyLinkedList<String> videos = new CircularDoublyLinkedList<>();
+        try (FileReader fr = new FileReader(ruta);
+            BufferedReader bf = new BufferedReader(fr)) {
+            String path;
+            while ((path = bf.readLine())!=null){
+                videos.addLast(path);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return videos;
+    
+    }
 }
