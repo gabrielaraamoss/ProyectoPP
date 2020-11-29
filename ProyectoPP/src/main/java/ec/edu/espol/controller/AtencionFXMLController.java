@@ -5,21 +5,26 @@
  */
 package ec.edu.espol.controller;
 
+import ec.edu.espol.gui.App;
 import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.Turno;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
+//import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 
 /**
@@ -48,19 +53,19 @@ public class AtencionFXMLController implements Initializable {
     
     ArrayList<Turno> turnos = Turno.leer("turnos.ser");
     @FXML
-    private MediaView ventanaVideo;
+//    private MediaView ventanaVideo;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        File archivo = new File("ComercialMedicamentos.mp4");
-        Media media = new Media(archivo.toURI().toString());
-        MediaPlayer player = new MediaPlayer(media);
-        ventanaVideo.setMediaPlayer(player);
-        player.setAutoPlay(true);
-        
+//        File archivo = new File("ComercialMedicamentos.mp4");
+//        Media media = new Media(archivo.toURI().toString());
+//        MediaPlayer player = new MediaPlayer(media);
+//        ventanaVideo.setMediaPlayer(player);
+//        player.setAutoPlay(true);
+//        
         
         LocalDateTime locaDate = LocalDateTime.now();
         int hours  = locaDate.getHour();
@@ -79,6 +84,19 @@ public class AtencionFXMLController implements Initializable {
         
         
         
-    }    
+    }  
     
+    @FXML
+    private void regresar(MouseEvent event) {
+        try {
+            FXMLLoader fxmlloader1 = App.loadFXMLoad("VentanaFXML");
+            App.setRoot(fxmlloader1);
+
+        }catch (IOException ex) {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
+            alerta.show();
+        }            
+                
+        
+    }
 }

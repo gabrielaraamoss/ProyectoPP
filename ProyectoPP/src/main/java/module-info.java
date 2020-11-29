@@ -2,7 +2,7 @@ module ec.edu.espol.gui {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.base;
-    requires javafx.media;
+//    requires javafx.media;
 
     opens ec.edu.espol.gui to javafx.fxml;
     opens ec.edu.espol.controller to javafx.media;

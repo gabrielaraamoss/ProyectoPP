@@ -14,14 +14,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 /**
  * FXML Controller class
  *
  * @author gabrielaramos
  */
-public class PuestoFXMLController implements Initializable {
+public class EliminarPuestoFXMLController implements Initializable {
 
+
+    @FXML
+    private ComboBox<?> cbxM;
     /**
      * Initializes the controller class.
      */
@@ -30,7 +34,7 @@ public class PuestoFXMLController implements Initializable {
         // TODO
     }    
     
-    @FXML
+  @FXML
     private void regresar(MouseEvent event) {
         try {
             FXMLLoader fxmlloader1 = App.loadFXMLoad("PrincipalFXML");
@@ -39,12 +43,12 @@ public class PuestoFXMLController implements Initializable {
         }catch (IOException ex) {
             Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             alerta.show();
-        }             
+        }              
     }
 
     @FXML
     private void registroP(MouseEvent event) {
-       try {
+        try {
             FXMLLoader fxmlloader2 = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader2);
             VentanaFXMLController controlador=fxmlloader2.getController();
@@ -52,52 +56,38 @@ public class PuestoFXMLController implements Initializable {
             } catch (IOException ex) {
                 Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
                 a.show();
-            }          
+            }              
+    }
+
+    @FXML
+    private void regresarP(MouseEvent event) {
+        try {
+            FXMLLoader fxmlloader1 = App.loadFXMLoad("PuestoFXML");
+            App.setRoot(fxmlloader1);
+            PuestoFXMLController controlador=fxmlloader1.getController();
+
+            } catch (IOException ex) {
+                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+                a.show();
+            }               
     }
 
     @FXML
     private void registroM(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader3 = App.loadFXMLoad("RegistroMedicoFXML");
-            App.setRoot(fxmlloader3);
-            RegistroMedicoFXMLController controlador=fxmlloader3.getController();
+            FXMLLoader fxmlloader2 = App.loadFXMLoad("RegistroMedicoFXML");
+            App.setRoot(fxmlloader2);
+            RegistroMedicoFXMLController controlador=fxmlloader2.getController();
 
             } catch (IOException ex) {
                 Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
                 a.show();
-            }          
-    }
-
-    @FXML
-    private void crearPuesto(MouseEvent event) {
-        try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("CrearPuestoFXML");
-            App.setRoot(fxmlloader1);
-            CrearPuestoFXMLController controlador=fxmlloader1.getController();
-
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }            
-            
+            }         
+         
     }
 
     @FXML
     private void eliminarPuesto(MouseEvent event) {
-        try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("EliminarPuestoFXML");
-            App.setRoot(fxmlloader1);
-            EliminarPuestoFXMLController controlador=fxmlloader1.getController();
-
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }            
-                    
-        
-        
-        
     }
-    
 
 }

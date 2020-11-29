@@ -16,7 +16,7 @@
             <Font name="Times New Roman Bold" size="28.0" />
          </font>
       </Text>
-      <SplitPane dividerPositions="0.5" layoutY="48.0" prefHeight="315.0" prefWidth="600.0" style="-fx-background-color: white; -fx-border-color: white;">
+      <SplitPane dividerPositions="0.5" layoutY="41.0" prefHeight="315.0" prefWidth="600.0" style="-fx-background-color: white; -fx-border-color: white;">
         <items>
           <AnchorPane fx:id="video" minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="304.0">
                <children>
@@ -68,15 +68,20 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Label alignment="CENTER" layoutX="22.0" layoutY="363.0" prefHeight="17.0" prefWidth="549.0" style="-fx-background-color: SandyBrown;" text="Horario de atención de Lunes a Viernes de 08:00 a 20:00" textFill="#f8f5f5">
+      <Label alignment="CENTER" layoutX="22.0" layoutY="356.0" prefHeight="17.0" prefWidth="549.0" style="-fx-background-color: SandyBrown;" text="Horario de atención de Lunes a Viernes de 08:00 a 20:00" textFill="#f8f5f5">
          <font>
             <Font name="Times New Roman" size="20.0" />
          </font>
       </Label>
-      <ImageView fitHeight="45.0" fitWidth="52.0" layoutX="7.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="45.0" fitWidth="52.0" layoutX="30.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../Imagenes/41hwNl3V9PL.png" />
          </image>
       </ImageView>
+      <Text fill="#dd3207" layoutX="3.0" layoutY="31.0" onMouseClicked="#regresar" strokeType="OUTSIDE" strokeWidth="0.0" text="⬅" wrappingWidth="24.22265625">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
