@@ -8,10 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="ec.edu.espol.controller.PrincipalFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.controller.PrincipalFXMLController">
    <children>
-      <Button layoutX="238.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#registro" style="-fx-background-color: Coral;" text="REGISTRO" textFill="WHITE">
+      <Button layoutX="133.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#registro" style="-fx-background-color: Coral;" text="REGISTRO" textFill="WHITE">
          <font>
             <Font size="21.0" />
          </font>
@@ -40,5 +39,10 @@
             <Image url="@../../../../Imagenes/reconocimientos-medicos-pamplona-renovar-carnet.600.png" />
          </image>
       </ImageView>
+      <Button layoutX="307.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#recetar" style="-fx-background-color: Coral;" text="RECETAR" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

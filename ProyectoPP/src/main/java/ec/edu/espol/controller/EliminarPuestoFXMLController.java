@@ -6,9 +6,14 @@
 package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
+import ec.edu.espol.model.Medico;
+import ec.edu.espol.model.Puesto;
+import ec.edu.espol.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,13 +30,13 @@ public class EliminarPuestoFXMLController implements Initializable {
 
 
     @FXML
-    private ComboBox<?> cbxM;
+    private ComboBox cbxM;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        cbxM.setItems(FXCollections.observableArrayList(Puesto.codigosPuesto("puestos.ser")));
     }    
     
   @FXML
@@ -88,6 +93,10 @@ public class EliminarPuestoFXMLController implements Initializable {
 
     @FXML
     private void eliminarPuesto(MouseEvent event) {
+        int codigo = Integer.parseInt(cbxM.getValue().toString());
+        Puesto.eliminar(codigo, "puestos.ser");
+        
+        
     }
 
 }

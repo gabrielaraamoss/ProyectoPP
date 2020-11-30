@@ -5,9 +5,6 @@
  */
 package ec.edu.espol.model;
 
-import java.util.ArrayList;
-
-
 /**
  *
  * @author gabrielaramos

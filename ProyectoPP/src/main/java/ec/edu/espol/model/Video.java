@@ -15,6 +15,10 @@ import java.io.FileReader;
 public class Video {
     private String nombre;
 
+    public Video(String nombre) {
+        this.nombre = nombre;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -22,25 +26,14 @@ public class Video {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    
-    
-    @Override
-    public String toString() {
-        return "Video{" + "nombre=" + nombre + '}';
-    }
-    
-    
-    public Video(String nombre) {
-        this.nombre = nombre;
-    }
-    
+  
  public static CircularDoublyLinkedList<String> leer(String ruta){
         CircularDoublyLinkedList<String> videos = new CircularDoublyLinkedList<>();
         try (FileReader fr = new FileReader(ruta);
             BufferedReader bf = new BufferedReader(fr)) {
             String path;
             while ((path = bf.readLine())!=null){
+                System.out.println(path);
                 videos.addLast(path);
             }
         } catch (Exception e) {
@@ -48,5 +41,10 @@ public class Video {
         }
         return videos;
     
+    }
+ 
+      @Override
+    public String toString() {
+        return "Video{" + "nombre=" + nombre + '}';
     }
 }

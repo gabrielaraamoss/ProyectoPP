@@ -11,13 +11,13 @@ import ec.edu.espol.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -113,16 +113,9 @@ public class RegistroMedicoFXMLController implements Initializable {
         a.show();
         }else{
             Medico medico = new Medico(nombre.getText(),apellido.getText(),cbxS.getValue().toString());
-            try{
-                ArrayList<Usuario> medicos = Medico.leer("medicos.ser");
-                medicos.add(medico);
-                Medico.guardar(medicos,"medicos.ser");
-            }
-            catch(ClassNotFoundException e){
-                ArrayList<Usuario> usuarios = new ArrayList();
-                usuarios.add(medico);
-                Medico.guardar(usuarios,"medicos.ser");
-            }
+            Map<String, Usuario> medicos = Medico.leer("medicos.ser");
+            medicos.put(medico.getNombres(), medico);
+            Medico.guardar(medicos,"medicos.ser");
             
         }           
         nombre.clear();

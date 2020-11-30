@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -25,42 +25,61 @@ import java.util.Queue;
  */
 public class Puesto implements Serializable {
     private int codigo;
-    private PriorityQueue<Turno> turnos;
+    private  LinkedList<Turno> turnos;
     private Medico medico;
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1000L;
 
-    public Puesto(int codig, Medico medico) {
+    public Puesto(int codigo, Medico medico) {
         this.codigo = codigo;
-        this.turnos = new PriorityQueue<>((Turno t1 , Turno t2)-> t1.getPaciente().getSintoma().getPrioridad()-t2.getPaciente().getSintoma().getPrioridad());
+        this.turnos = new LinkedList<>();
         this.medico = medico;
     }
 
- public static void guardar(Queue<Puesto> cola,String archivo){
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public LinkedList<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(LinkedList<Turno> turnos) {
+        this.turnos = turnos;
+    }
+
+   
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+    
+    public static void guardar(Queue<Puesto> cola,String archivo){
         try(ObjectOutputStream es = new ObjectOutputStream(new FileOutputStream(archivo))){
-            try{
-                if (cola.size()<=0){
-                    throw new ErrorEmptyList(cola.size());
-                }else{             
+                     System.out.println(cola);   
                     es.writeObject(cola);
-                }
-                
-            }catch(ErrorEmptyList e){
-                System.out.println(e);
-            }
+                    System.out.println("se guardo");
         }catch (FileNotFoundException e){
+            System.out.println("e1");
             System.out.println(e.getMessage());
         }catch(IOException e){
+            System.out.println("e2");
             System.out.println(e.getMessage());
         }
     
     }
-    
-    
+
     public static Queue<Puesto> leer(String archivo){
         Queue<Puesto> puestos=new LinkedList<>();
         try(ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))){
             puestos=(Queue<Puesto>)es.readObject();
-
         }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }catch(IOException e){
@@ -73,42 +92,47 @@ public class Puesto implements Serializable {
       
     }
     
-    public static void eliminar(String codigo, String arhivo){
-        int cod = Integer.parseInt(codigo);
-        Queue<Puesto> puestos =  Puesto.leer(arhivo);
-        for (int i = 0 ; i< puestos.size();i++){
+    public static ArrayList<String> codigosPuesto(String archivo){
+        Queue<Puesto> puestos = leer(archivo);
+        ArrayList<String> codigo = new ArrayList<>();
+        int tamanio = puestos.size();
+        for (int i = 0 ; i< tamanio; i++){
             Puesto p = puestos.poll();
-            if(p.codigo!=cod){
-                puestos.offer(p);
-            }
-        }
-    }
-    
-    public int getCodigo() {
+            codigo.add(p.codigo+"");
+        }   
         return codigo;
     }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public PriorityQueue<Turno> getTurnos() {
-        return turnos;
-    }
-
-    public void setTurnos(PriorityQueue<Turno> turnos) {
-        this.turnos = turnos;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
     
+    public static void eliminar(int codigo, String arhivo){
+        Map<String, Usuario> medicos = Medico.leer("medicos.ser");
+        Queue<Puesto> puestos =  Puesto.leer(arhivo);
+        for (int i = 0 ; i< puestos.size();i++){
+            Puesto  p = puestos.poll();
+            if(p.codigo == codigo){                
+                Medico m = (Medico)medicos.get(p.medico.nombres);
+                m.setPuesto(0); 
+            }
+            else {
+                puestos.offer(p);    
+            }
+        }
+        Medico.guardar(medicos, "medicos.ser");
+        guardar(puestos, "puestos.ser");
+    }
+    
+    public static int obtenerCod(String ruta){
+        Queue<Puesto> puestos = leer(ruta);
+        System.out.println(puestos);
+        return  puestos.size()+1;   
+    }
+
+    @Override
+    public String toString() {
+        return "Puesto{" + "codigo=" + codigo + ",medico=" + medico + '}';
+    }
+    
+    
+ 
 }
 
     

@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -49,12 +47,14 @@ public class VentanaFXMLController implements Initializable {
     
     Queue<Puesto> puestos = Puesto.leer("puestos.ser");
     Map<String , Sintoma> sintomas = Sintoma.leer("sintomas.ser");
-    ArrayList<Turno> turnos = Turno.leer("turnos.ser");
+    LinkedList<Turno> turnos = Turno.leer("turnos.ser");
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        turnos.sort((Turno t1 , Turno t2)-> 
+                t2.getPaciente().getSintoma().getPrioridad()- t1.getPaciente().getSintoma().getPrioridad());
         ArrayList<String> items=new ArrayList<>();
         ArrayList<String> items1=new ArrayList<>();
         items.add("M");
@@ -83,9 +83,7 @@ public class VentanaFXMLController implements Initializable {
         }catch (IOException ex) {
             Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             alerta.show();
-        }            
-                
-        
+        }               
     }
 
     @FXML
@@ -118,76 +116,62 @@ public class VentanaFXMLController implements Initializable {
     
     @FXML
     private void registrar(MouseEvent event) {
-        if(nombre.getText().isEmpty()||apellido.getText().isEmpty()||cbxS.getValue()==null){
-                if(nombre.getText().isEmpty()){
-                    Alert a1=new Alert(Alert.AlertType.INFORMATION,"INGRESE NOMBRES");
-                    a1.show();
-                }
-                else if(apellido.getText().isEmpty()){
-                    Alert a2=new Alert(Alert.AlertType.INFORMATION,"INGRESE APELLIDOS");
-                    a2.show();
-                }
-                
-                else if(edad.getText().isEmpty()){
-                    Alert a3=new Alert(Alert.AlertType.INFORMATION,"INGRESE EDAD");
-                    a3.show();
-                }                
-                
-                else if(cbxG.getValue()==null){
-                    Alert a4=new Alert(Alert.AlertType.INFORMATION,"SELECCIONE");
-                    a4.show();
-                
-                }                
-                
-                
-                else if(cbxS.getValue()==null){
-                    Alert a5=new Alert(Alert.AlertType.INFORMATION,"SELECCIONE");
-                    a5.show();
-                
-                }
-                
-            Alert a=new Alert(Alert.AlertType.INFORMATION,"INGRESE DATOS");
+        if (nombre.getText().isEmpty() || apellido.getText().isEmpty() || cbxS.getValue() == null) {
+            if (nombre.getText().isEmpty()) {
+                Alert a1 = new Alert(Alert.AlertType.INFORMATION, "INGRESE NOMBRES");
+                a1.show();
+            } else if (apellido.getText().isEmpty()) {
+                Alert a2 = new Alert(Alert.AlertType.INFORMATION, "INGRESE APELLIDOS");
+                a2.show();
+            } else if (edad.getText().isEmpty()) {
+                Alert a3 = new Alert(Alert.AlertType.INFORMATION, "INGRESE EDAD");
+                a3.show();
+            } else if (cbxG.getValue() == null) {
+                Alert a4 = new Alert(Alert.AlertType.INFORMATION, "SELECCIONE");
+                a4.show();
+
+            } else if (cbxS.getValue() == null) {
+                Alert a5 = new Alert(Alert.AlertType.INFORMATION, "SELECCIONE");
+                a5.show();
+
+            }
+
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "INGRESE DATOS");
             a.show();
-          
-            }else{
-            System.out.println(sintomas.get(cbxS.getValue().toString()));
-            Paciente paciente = new Paciente(nombre.getText(),apellido.getText(),Integer.parseInt(edad.getText()),cbxG.getValue().toString().charAt(0),sintomas.get(cbxS.getValue().toString()));
-            try{
-                Puesto p = puestos.poll();
-                Turno turno = new Turno("A10",p,paciente);
-                //p.getTurnos().offer(turno);
-                puestos.offer(p);
-                turnos.add(turno);
-                Turno.guardar(turnos, "turnos.ser");
-                
-                ArrayList<Usuario> pacientes = Paciente.leer("pacientes.ser");
-                pacientes.add(paciente);
-                Paciente.guardar(pacientes,"pacientes.ser");             
-            }
-            catch(ClassNotFoundException e){
-                ArrayList<Usuario> usuarios = new ArrayList();
-                usuarios.add(paciente);
-                Paciente.guardar(usuarios,"pacientes.ser");
-            }
-            
+
+        } else {
+            Paciente paciente = new Paciente(nombre.getText(), apellido.getText(), Integer.parseInt(edad.getText()), cbxG.getValue().toString().charAt(0), sintomas.get(cbxS.getValue().toString()));
+            Puesto p = puestos.poll();
+            int tamaño = p.getTurnos().size();
+            char inicial1 = p.getMedico().getNombres().charAt(0);
+            char inicial2 = p.getMedico().getApellidos().charAt(0);
+            String codTurno = inicial1+""+inicial2+tamaño;
+            Turno turno = new Turno(codTurno, p, paciente);
+            p.getTurnos().add(turno);
+            turnos.add(turno);
+            Turno.guardar(turnos, "turnos.ser");
+            Map<String, Usuario> pacientes = Paciente.leer("pacientes.ser");
+            pacientes.put(paciente.getNombres(), paciente);
+            Paciente.guardar(pacientes, "pacientes.ser");
+            puestos.offer(p);
+            Puesto.guardar(puestos, "puestos.ser");
             try {
                 FXMLLoader fxmlloader2 = App.loadFXMLoad("AtencionFXML");
                 App.setRoot(fxmlloader2);
-                AtencionFXMLController controlador=fxmlloader2.getController();
+                AtencionFXMLController controlador = fxmlloader2.getController();
 
             } catch (IOException ex) {
                 Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
                 a.show();
-            }   
-            
-        }           
+            }
+
+        }
 //        nombre.clear();
 //        apellido.clear();
 //        edad.clear();
 //        cbxG.setValue("");
 //        cbxS.setValue("");        
 
-        
     }
     
 

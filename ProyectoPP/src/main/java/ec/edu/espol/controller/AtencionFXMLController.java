@@ -9,14 +9,19 @@ import ec.edu.espol.gui.App;
 import ec.edu.espol.model.CircularDoublyLinkedList;
 import ec.edu.espol.model.List;
 import ec.edu.espol.model.Puesto;
+import ec.edu.espol.model.Reloj;
 import ec.edu.espol.model.Turno;
 import ec.edu.espol.model.Video;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -56,9 +61,10 @@ public class AtencionFXMLController implements Initializable {
     @FXML
     private Label puesto3;
     
-    private ArrayList<Turno> turnos = Turno.leer("turnos.ser");
-    private Thread hiloReloj;
-    private final boolean banderaHilo = true;
+    LinkedList<Turno> turnos = Turno.leer("turnos.ser");
+    private Reloj reloj;
+    private final CircularDoublyLinkedList<String> videos =Video.leer("videos.txt");
+    private Iterator it = videos.iterator();
     
     @FXML
     private MediaView ventanaVideo;
@@ -69,51 +75,40 @@ public class AtencionFXMLController implements Initializable {
  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        reproducirVideos(Video.leer("videos.txt"));
-        hiloReloj=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                    while(banderaHilo){
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                           LocalDateTime locaDate = LocalDateTime.now();
-                           int hours = locaDate.getHour();
-                           int minutes = locaDate.getMinute();
-                           int seconds = locaDate.getSecond();
-                           tiempo.setText(hours+":"+minutes+":"+seconds);
-                           System.out.println(seconds); 
-                        }
-                    });
-                    try {
-                        Thread.sleep(1000);    
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
+        turnos.sort((Turno t1 , Turno t2)-> 
+                t1.getPaciente().getSintoma().getPrioridad()- t2.getPaciente().getSintoma().getPrioridad());
+        reloj = new Reloj(tiempo);
+        reloj.start();
+        reproducirVideos(it);
+        int tamanio = turnos.size();
+        if(tamanio>=3){
+            Turno t = turnos.pollFirst();
+            turno1.setText(t.getCodigo());
+            puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
+             t = turnos.pollFirst();
+            turno2.setText(t.getCodigo());
+            puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
+            t = turnos.pollFirst();
+            turno3.setText(t.getCodigo());
+            puesto3.setText(String.valueOf(t.getPuesto().getCodigo()));
             
-        });
-        hiloReloj.start();
-        
-  
-        Turno t = turnos.get(0);
-        System.out.println(t);
-        turno1.setText(t.getCodigo());
-        /*puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
-        /*t = turnos.get(1);
-        turno2.setText(t.getCodigo());
-        puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
-        t = turnos.get(2);
-        turno3.setText(t.getCodigo());
-        puesto3.setText(String.valueOf(t.getPuesto().getCodigo()));*/
-        
-        
-        
+        }
+        else if (tamanio==2){
+            Turno t = turnos.pollFirst();
+            turno1.setText(t.getCodigo());
+            puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
+             t = turnos.pollFirst();
+            turno2.setText(t.getCodigo());
+            puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
+        }
+        else {
+            Turno t = turnos.pollFirst();
+            turno1.setText(t.getCodigo());
+            puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
+        }           
     }    
     
-    public void reproducirVideos(final CircularDoublyLinkedList<String> videos){
-        Iterator it =videos.iterator();
+    public void reproducirVideos(Iterator it){
         String url = it.next().toString();
         Media media = new Media(new File(url).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
@@ -121,17 +116,17 @@ public class AtencionFXMLController implements Initializable {
         player.setOnEndOfMedia(new Runnable(){
             @Override
             public void run(){
-                reproducirVideos(videos);
-            }
-            
+                reproducirVideos(it);
+            }          
         });
         ventanaVideo.setMediaPlayer(player);
+        
     }
- 
+    
     @FXML
     private void regresar(MouseEvent event) {
         try {
-            hiloReloj.stop();
+            reloj.stopHilo();
             FXMLLoader fxmlloader1 = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader1);
 

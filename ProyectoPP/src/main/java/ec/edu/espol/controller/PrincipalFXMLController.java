@@ -44,4 +44,17 @@ public class PrincipalFXMLController implements Initializable {
          
     }
 
+    @FXML
+    private void recetar(MouseEvent event) {
+        try {
+            FXMLLoader fxmlloader2 = App.loadFXMLoad("RecetarFXML");
+            App.setRoot(fxmlloader2);
+            RecetarFXMLController controlador=fxmlloader2.getController();
+
+            } catch (IOException ex) {
+                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+                a.show();
+            }  
+    }
+
 }

@@ -31,36 +31,22 @@ public class Sintoma  implements Serializable{
         this.prioridad = prioridad;
     }
     
+    public static void guardar(Map<String, Sintoma> mapa, String archivo) {
+        try (ObjectOutputStream es = new ObjectOutputStream(new FileOutputStream(archivo))) {
 
-    
-    public static void guardar(ArrayList<Sintoma> arraylist,String archivo){
-        try(ObjectOutputStream es = new ObjectOutputStream(new FileOutputStream(archivo))){
-            try{
-                if (arraylist.size()<=0){
-                    throw new ErrorEmptyList(arraylist.size());
-                }else{             
-                    es.writeObject(arraylist);
-                }
-                
-            }catch(ErrorEmptyList e){
-                System.out.println(e);
-            }
-        }catch (FileNotFoundException e){
+            es.writeObject(mapa);
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
-        }catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    
-    }
-    
-    public static Map<String, Sintoma> leer(String archivo){
-        Map<String , Sintoma> sintomasMap = new HashMap<>();
-        try(ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))){
-           ArrayList<Sintoma>   sintomas=(ArrayList<Sintoma>)es.readObject();
-            for (Sintoma s: sintomas){               
-                sintomasMap.put(s.getNombre(), s);
-            }
 
+    }
+
+    public static Map<String, Sintoma> leer(String archivo){
+        Map<String , Sintoma> sintomas = new HashMap<>();
+        try(ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))){
+            sintomas=(Map<String , Sintoma> )es.readObject(); 
         }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }catch(IOException e){
@@ -69,7 +55,7 @@ public class Sintoma  implements Serializable{
         catch(ClassNotFoundException e){
             System.out.println(e.getMessage());
         } 
-        return sintomasMap;
+        return sintomas;
       
     }        
 

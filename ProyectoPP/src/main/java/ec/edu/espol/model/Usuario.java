@@ -12,13 +12,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author gabrielaramos
  */
 public class Usuario implements Serializable {
+
     protected String nombres;
     protected String apellidos;
     private static final long serialVersionUID = 5L;
@@ -27,44 +29,45 @@ public class Usuario implements Serializable {
         this.nombres = nombres;
         this.apellidos = apellidos;
     }
-    
-    
-    public static void guardar(ArrayList<Usuario> arraylist,String archivo){
-        try(ObjectOutputStream es = new ObjectOutputStream(new FileOutputStream(archivo))){
-            try{
-                if (arraylist.size()<=0){
-                    throw new ErrorEmptyList(arraylist.size());
-                }else{             
-                    es.writeObject(arraylist);
-                }
-                
-            }catch(ErrorEmptyList e){
-                System.out.println(e);
-            }
-        }catch (FileNotFoundException e){
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public static void guardar(Map<String, Usuario> mapa, String archivo) {
+        try (ObjectOutputStream es = new ObjectOutputStream(new FileOutputStream(archivo))) {
+            es.writeObject(mapa);
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
-        }catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    
     }
-    
-    public static ArrayList<Usuario> leer(String archivo) throws ClassNotFoundException{
-        ArrayList<Usuario> usuarios=new ArrayList<>();
-        try(ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))){
-            usuarios=(ArrayList<Usuario>)es.readObject();
 
-        }catch (FileNotFoundException e){
+    
+    public static Map<String, Usuario> leer(String archivo) {
+        Map<String, Usuario> usuarios = new HashMap<>();
+        try (ObjectInputStream es = new ObjectInputStream(new FileInputStream(archivo))) {
+            usuarios = (Map<String, Usuario>) es.readObject();
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
-        }catch(IOException e){
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
-        } 
+        }
         return usuarios;
-      
-    }   
-    
-    
-    
-    
-    
+
+    }
+
 }
