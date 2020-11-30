@@ -63,9 +63,7 @@ public class Puesto implements Serializable {
     
     public static void guardar(Queue<Puesto> cola,String archivo){
         try(ObjectOutputStream es = new ObjectOutputStream(new FileOutputStream(archivo))){
-                     System.out.println(cola);   
                     es.writeObject(cola);
-                    System.out.println("se guardo");
         }catch (FileNotFoundException e){
             System.out.println("e1");
             System.out.println(e.getMessage());
@@ -122,7 +120,6 @@ public class Puesto implements Serializable {
     
     public static int obtenerCod(String ruta){
         Queue<Puesto> puestos = leer(ruta);
-        System.out.println(puestos);
         return  puestos.size()+1;   
     }
 

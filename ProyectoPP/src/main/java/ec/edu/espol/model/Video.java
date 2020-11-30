@@ -33,7 +33,6 @@ public class Video {
             BufferedReader bf = new BufferedReader(fr)) {
             String path;
             while ((path = bf.readLine())!=null){
-                System.out.println(path);
                 videos.addLast(path);
             }
         } catch (Exception e) {

@@ -16,7 +16,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
-        scene = new Scene(loadFXML("CrearPuestoFXML"), 600, 400);
+        scene = new Scene(loadFXML("PrincipalFXML"), 600, 400);
         stage.setScene(scene);
         stage.show();
     }

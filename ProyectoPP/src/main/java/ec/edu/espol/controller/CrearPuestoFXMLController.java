@@ -103,13 +103,10 @@ public class CrearPuestoFXMLController implements Initializable {
         }
         else{
             Medico medico = (Medico) medicos.get(nombre);
-            System.out.println(Puesto.obtenerCod("puestos.ser"));
             Puesto p = new Puesto(Puesto.obtenerCod("puestos.ser"), medico);
             medico.setPuesto(p.getCodigo());
             Queue<Puesto> puestos = Puesto.leer("puestos.ser");
             puestos.offer(p);
-            System.out.println(puestos.size());
-            System.out.println(medico);
             Puesto.guardar(puestos, "puestos.ser");   
             Medico.guardar(medicos, "medicos.ser");
         }

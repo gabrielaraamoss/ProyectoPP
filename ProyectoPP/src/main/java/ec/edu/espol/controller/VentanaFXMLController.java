@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -57,10 +58,10 @@ public class VentanaFXMLController implements Initializable {
                 t2.getPaciente().getSintoma().getPrioridad()- t1.getPaciente().getSintoma().getPrioridad());
         ArrayList<String> items=new ArrayList<>();
         ArrayList<String> items1=new ArrayList<>();
+        edad.setTextFormatter(new TextFormatter<>(change -> (change.getControlNewText().matches("(-?([0-9]*+[.])?[0-9]*)")) ? change : null));
         items.add("M");
         items.add("F");
         cbxG.setItems(FXCollections.observableArrayList(items));
-        
         items1.add("Fiebre");
         items1.add("Desmayo");
         items1.add("Resfriado");

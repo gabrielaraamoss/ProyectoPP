@@ -125,8 +125,8 @@ public class AtencionFXMLController implements Initializable {
     
     @FXML
     private void regresar(MouseEvent event) {
-        try {
-            reloj.stopHilo();
+        reloj.stopHilo();
+        try {         
             FXMLLoader fxmlloader1 = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader1);
 
