@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 /*
@@ -80,10 +79,7 @@ public class Puesto implements Serializable {
             puestos=(Queue<Puesto>)es.readObject();
         }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
-        }catch(IOException e){
-            System.out.println(e.getMessage());
-        } 
-        catch(ClassNotFoundException e){
+        }catch(IOException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         } 
         return puestos;

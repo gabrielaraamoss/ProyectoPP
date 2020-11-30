@@ -7,24 +7,15 @@ package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
 import ec.edu.espol.model.CircularDoublyLinkedList;
-import ec.edu.espol.model.List;
-import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.Reloj;
 import ec.edu.espol.model.Turno;
 import ec.edu.espol.model.Video;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -108,19 +99,15 @@ public class AtencionFXMLController implements Initializable {
         }           
     }    
     
-    public void reproducirVideos(Iterator it){
+    public void reproducirVideos(Iterator it) {
         String url = it.next().toString();
         Media media = new Media(new File(url).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.setAutoPlay(true);
-        player.setOnEndOfMedia(new Runnable(){
-            @Override
-            public void run(){
-                reproducirVideos(it);
-            }          
+        player.setOnEndOfMedia(() -> {
+            reproducirVideos(it);
         });
         ventanaVideo.setMediaPlayer(player);
-        
     }
     
     @FXML

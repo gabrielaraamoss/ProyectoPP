@@ -6,12 +6,9 @@
 package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
-import ec.edu.espol.model.Medico;
 import ec.edu.espol.model.Puesto;
-import ec.edu.espol.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

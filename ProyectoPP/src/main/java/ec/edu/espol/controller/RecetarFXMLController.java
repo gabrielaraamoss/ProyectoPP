@@ -55,7 +55,7 @@ public class RecetarFXMLController implements Initializable {
             App.setRoot(fxmlloader1);
             PuestoFXMLController controlador=fxmlloader1.getController();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 

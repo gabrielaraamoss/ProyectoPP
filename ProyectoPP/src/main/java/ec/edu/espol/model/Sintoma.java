@@ -12,9 +12,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,10 +47,7 @@ public class Sintoma  implements Serializable{
             sintomas=(Map<String , Sintoma> )es.readObject(); 
         }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
-        }catch(IOException e){
-            System.out.println(e.getMessage());
-        } 
-        catch(ClassNotFoundException e){
+        }catch(IOException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         } 
         return sintomas;

@@ -36,7 +36,7 @@ public class Reloj extends Thread{
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                    System.out.println(ex.getMessage());
                 }
             }
 

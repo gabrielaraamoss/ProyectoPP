@@ -169,10 +169,10 @@ public class CircularDoublyLinkedList <E> implements List<E> , Iterable<E> {
     }
     
     @Override
-    public boolean equals(Object o){
-        if (o.getClass()!= this.getClass() || o==null) return false;
-        if(o==this)return true;
-        CircularDoublyLinkedList<E> l= (CircularDoublyLinkedList<E>) o;
+    public boolean equals(Object ob){
+        if (ob.getClass()!= this.getClass() || ob==null) return false;
+        if(ob==this)return true;
+        CircularDoublyLinkedList<E> l= (CircularDoublyLinkedList<E>) ob;
         if (this.current!=l.current) return false;
         else{
             Node<E> nodo=first;

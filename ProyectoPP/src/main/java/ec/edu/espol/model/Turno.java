@@ -13,7 +13,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 
 /**
  *
@@ -74,9 +73,7 @@ public class Turno implements Serializable {
                 lista=(LinkedList<Turno>)es.readObject();  
         }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
-        }catch(IOException e){
-            System.out.println(e.getMessage());
-        } catch(ClassNotFoundException e){
+        }catch(IOException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         } 
         return lista;
