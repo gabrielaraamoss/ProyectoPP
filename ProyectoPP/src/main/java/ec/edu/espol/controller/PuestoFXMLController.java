@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 
 import javafx.scene.input.MouseEvent;
+
 /**
  * FXML Controller class
  *
@@ -22,82 +23,81 @@ import javafx.scene.input.MouseEvent;
  */
 public class PuestoFXMLController implements Initializable {
 
+    Alert a;
+    FXMLLoader fxmlloader;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     @FXML
     private void regresar(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("PrincipalFXML");
-            App.setRoot(fxmlloader1);
+            fxmlloader = App.loadFXMLoad("PrincipalFXML");
+            App.setRoot(fxmlloader);
 
-        }catch (IOException ex) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
-            alerta.show();
-        }             
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
+            a.show();
+        }
     }
 
     @FXML
     private void registroP(MouseEvent event) {
-       try {
-            FXMLLoader fxmlloader2 = App.loadFXMLoad("VentanaFXML");
-            App.setRoot(fxmlloader2);
-            VentanaFXMLController controlador=fxmlloader2.getController();
+        try {
+            fxmlloader = App.loadFXMLoad("VentanaFXML");
+            App.setRoot(fxmlloader);
+            VentanaFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }          
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
     }
 
     @FXML
     private void registroM(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader3 = App.loadFXMLoad("RegistroMedicoFXML");
-            App.setRoot(fxmlloader3);
-            RegistroMedicoFXMLController controlador=fxmlloader3.getController();
+            fxmlloader = App.loadFXMLoad("RegistroMedicoFXML");
+            App.setRoot(fxmlloader);
+            RegistroMedicoFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }          
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
     }
 
     @FXML
     private void crearPuesto(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("CrearPuestoFXML");
-            App.setRoot(fxmlloader1);
-            CrearPuestoFXMLController controlador=fxmlloader1.getController();
+            fxmlloader = App.loadFXMLoad("CrearPuestoFXML");
+            App.setRoot(fxmlloader);
+            CrearPuestoFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }            
-            
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
+
     }
 
     @FXML
     private void eliminarPuesto(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("EliminarPuestoFXML");
-            App.setRoot(fxmlloader1);
-            EliminarPuestoFXMLController controlador=fxmlloader1.getController();
+            fxmlloader = App.loadFXMLoad("EliminarPuestoFXML");
+            App.setRoot(fxmlloader);
+            EliminarPuestoFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }            
-                    
-        
-        
-        
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
+
     }
-    
 
 }

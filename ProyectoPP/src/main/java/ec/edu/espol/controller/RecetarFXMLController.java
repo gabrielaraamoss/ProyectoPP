@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+
 /**
  * FXML Controller class
  *
@@ -24,36 +25,36 @@ import javafx.scene.input.MouseEvent;
  */
 public class RecetarFXMLController implements Initializable {
 
-
     @FXML
     private Label turno;
     @FXML
     private Label medico;
     @FXML
     private Label paciente;
-    
+
     LinkedList<Turno> turnos = Turno.leer("turnos.ser");
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         turnos.sort((Turno t1 , Turno t2)-> 
-                t1.getPaciente().getSintoma().getPrioridad()- t2.getPaciente().getSintoma().getPrioridad());
-         Turno turn = turnos.pollFirst();
-         paciente.setText(turn.getPaciente().getNombres()+" "+turn.getPaciente().getApellidos());
-         medico.setText(turn.getPuesto().getMedico().getNombres());
-         turno.setText(turn.getCodigo());
-         
-    }    
-    
+        turnos.sort((Turno t1, Turno t2)
+                -> t1.getPaciente().getSintoma().getPrioridad() - t2.getPaciente().getSintoma().getPrioridad());
+        Turno turn = turnos.pollFirst();
+        paciente.setText(turn.getPaciente().getNombres() + " " + turn.getPaciente().getApellidos());
+        medico.setText(turn.getPuesto().getMedico().getNombres());
+        turno.setText(turn.getCodigo());
+
+    }
+
     @FXML
     private void registrar(MouseEvent event) {
         Turno.guardar(turnos, "turnos.ser");
         try {
             FXMLLoader fxmlloader1 = App.loadFXMLoad("PrincipalFXML");
             App.setRoot(fxmlloader1);
-            PuestoFXMLController controlador=fxmlloader1.getController();
+            PuestoFXMLController controlador = fxmlloader1.getController();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

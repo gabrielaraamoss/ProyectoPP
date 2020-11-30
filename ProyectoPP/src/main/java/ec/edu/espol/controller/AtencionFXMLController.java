@@ -51,54 +51,51 @@ public class AtencionFXMLController implements Initializable {
     private Label puesto2;
     @FXML
     private Label puesto3;
-    
+
     LinkedList<Turno> turnos = Turno.leer("turnos.ser");
     private Reloj reloj;
-    private final CircularDoublyLinkedList<String> videos =Video.leer("videos.txt");
+    private final CircularDoublyLinkedList<String> videos = Video.leer("videos.txt");
     private Iterator it = videos.iterator();
-    
+
     @FXML
     private MediaView ventanaVideo;
 
     /**
      * Initializes the controller class.
      */
- 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        turnos.sort((Turno t1 , Turno t2)-> 
-                t1.getPaciente().getSintoma().getPrioridad()- t2.getPaciente().getSintoma().getPrioridad());
+        turnos.sort((Turno t1, Turno t2)
+                -> t1.getPaciente().getSintoma().getPrioridad() - t2.getPaciente().getSintoma().getPrioridad());
         reloj = new Reloj(tiempo);
         reloj.start();
         reproducirVideos(it);
         int tamanio = turnos.size();
-        if(tamanio>=3){
+        if (tamanio >= 3) {
             Turno t = turnos.pollFirst();
             turno1.setText(t.getCodigo());
             puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
-             t = turnos.pollFirst();
+            t = turnos.pollFirst();
             turno2.setText(t.getCodigo());
             puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
             t = turnos.pollFirst();
             turno3.setText(t.getCodigo());
             puesto3.setText(String.valueOf(t.getPuesto().getCodigo()));
-            
-        }
-        else if (tamanio==2){
+
+        } else if (tamanio == 2) {
             Turno t = turnos.pollFirst();
             turno1.setText(t.getCodigo());
             puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
-             t = turnos.pollFirst();
+            t = turnos.pollFirst();
             turno2.setText(t.getCodigo());
             puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
-        }
-        else {
+        } else {
             Turno t = turnos.pollFirst();
             turno1.setText(t.getCodigo());
             puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
-        }           
-    }    
-    
+        }
+    }
+
     public void reproducirVideos(Iterator it) {
         String url = it.next().toString();
         Media media = new Media(new File(url).toURI().toString());
@@ -109,19 +106,18 @@ public class AtencionFXMLController implements Initializable {
         });
         ventanaVideo.setMediaPlayer(player);
     }
-    
+
     @FXML
     private void regresar(MouseEvent event) {
         reloj.stopHilo();
-        try {         
+        try {
             FXMLLoader fxmlloader1 = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader1);
 
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             alerta.show();
-        }            
-                
-        
+        }
+
     }
 }

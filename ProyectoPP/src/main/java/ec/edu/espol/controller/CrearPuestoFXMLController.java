@@ -22,6 +22,7 @@ import javafx.scene.control.Alert;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
+
 /**
  * FXML Controller class
  *
@@ -29,85 +30,86 @@ import javafx.scene.input.MouseEvent;
  */
 public class CrearPuestoFXMLController implements Initializable {
 
-
     @FXML
     private ComboBox cbxM;
-    
+    Alert a;
+    FXMLLoader fxmlloader;
+
     Map<String, Usuario> medicos = Medico.leer("medicos.ser");
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cbxM.setItems(FXCollections.observableArrayList(Medico.nombresMedicos()));
-    }    
-    
+    }
+
     @FXML
     private void regresar(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("PrincipalFXML");
-            App.setRoot(fxmlloader1);
+            fxmlloader = App.loadFXMLoad("PrincipalFXML");
+            App.setRoot(fxmlloader);
 
-        }catch (IOException ex) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
-            alerta.show();
-        }              
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
+            a.show();
+        }
     }
 
     @FXML
     private void registroP(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader2 = App.loadFXMLoad("VentanaFXML");
-            App.setRoot(fxmlloader2);
-            VentanaFXMLController controlador=fxmlloader2.getController();
+            fxmlloader = App.loadFXMLoad("VentanaFXML");
+            App.setRoot(fxmlloader);
+            VentanaFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }              
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
     }
 
     @FXML
     private void regresarP(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("PuestoFXML");
-            App.setRoot(fxmlloader1);
-            PuestoFXMLController controlador=fxmlloader1.getController();
+            fxmlloader = App.loadFXMLoad("PuestoFXML");
+            App.setRoot(fxmlloader);
+            PuestoFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }               
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
     }
 
     @FXML
     private void registroM(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader2 = App.loadFXMLoad("RegistroMedicoFXML");
-            App.setRoot(fxmlloader2);
-            RegistroMedicoFXMLController controlador=fxmlloader2.getController();
+            fxmlloader = App.loadFXMLoad("RegistroMedicoFXML");
+            App.setRoot(fxmlloader);
+            RegistroMedicoFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }         
-         
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
+
     }
 
     @FXML
     private void crearPuesto(MouseEvent event) {
         String nombre = cbxM.getValue().toString();
-        if (nombre == null){
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "MEDICO NO SELECCIONADO");
-            alerta.show();
-        }
-        else{
+        if (nombre == null) {
+            a = new Alert(Alert.AlertType.INFORMATION, "MEDICO NO SELECCIONADO");
+            a.show();
+        } else {
             Medico medico = (Medico) medicos.get(nombre);
             Puesto p = new Puesto(Puesto.obtenerCod("puestos.ser"), medico);
             medico.setPuesto(p.getCodigo());
             Queue<Puesto> puestos = Puesto.leer("puestos.ser");
             puestos.offer(p);
-            Puesto.guardar(puestos, "puestos.ser");   
+            Puesto.guardar(puestos, "puestos.ser");
             Medico.guardar(medicos, "medicos.ser");
         }
     }

@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 
 import javafx.scene.input.MouseEvent;
+
 /**
  * FXML Controller class
  *
@@ -22,39 +23,42 @@ import javafx.scene.input.MouseEvent;
  */
 public class PrincipalFXMLController implements Initializable {
 
+    Alert a;
+    FXMLLoader fxmlloader;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     @FXML
     private void registro(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader2 = App.loadFXMLoad("VentanaFXML");
-            App.setRoot(fxmlloader2);
-            VentanaFXMLController controlador=fxmlloader2.getController();
+            fxmlloader = App.loadFXMLoad("VentanaFXML");
+            App.setRoot(fxmlloader);
+            VentanaFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }         
-         
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
+
     }
 
     @FXML
     private void recetar(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader2 = App.loadFXMLoad("RecetarFXML");
-            App.setRoot(fxmlloader2);
-            RecetarFXMLController controlador=fxmlloader2.getController();
+            fxmlloader = App.loadFXMLoad("RecetarFXML");
+            App.setRoot(fxmlloader);
+            RecetarFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }  
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
     }
 
 }

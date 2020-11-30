@@ -24,12 +24,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+
 /**
  * FXML Controller class
  *
  * @author gabrielaramos
  */
 public class RegistroMedicoFXMLController implements Initializable {
+
     @FXML
     private TextField nombre;
     @FXML
@@ -52,88 +54,89 @@ public class RegistroMedicoFXMLController implements Initializable {
     private Label puesto2;
     @FXML
     private Label puesto3;
+
+    Alert a;
+    FXMLLoader fxmlloader;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ArrayList<String> items=new ArrayList<>();
+        ArrayList<String> items = new ArrayList<>();
         items.add("Cardiologo");
         items.add("Pediatra");
         items.add("Traumatologo");
         items.add("Medicina General");
         items.add("Neurologo");
         cbxS.setItems(FXCollections.observableArrayList(items));
-    }    
-    
+    }
+
     @FXML
     private void regresar(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("PrincipalFXML");
-            App.setRoot(fxmlloader1);
+            fxmlloader = App.loadFXMLoad("PrincipalFXML");
+            App.setRoot(fxmlloader);
 
-        }catch (IOException ex) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
-            alerta.show();
-        }            
-        
-        
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
+            a.show();
+        }
+
     }
-    
+
     @FXML
     private void registroP(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader2 = App.loadFXMLoad("VentanaFXML");
-            App.setRoot(fxmlloader2);
-            VentanaFXMLController controlador=fxmlloader2.getController();
+            fxmlloader = App.loadFXMLoad("VentanaFXML");
+            App.setRoot(fxmlloader);
+            VentanaFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }           
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
     }
 
     @FXML
     private void registrar(MouseEvent event) {
-        if(nombre.getText().isEmpty()||apellido.getText().isEmpty()||cbxS.getValue()==null){
-            if(nombre.getText().isEmpty()){
-                Alert a1=new Alert(Alert.AlertType.INFORMATION,"INGRESE NOMBRES");
-                a1.show();
+        if (nombre.getText().isEmpty() || apellido.getText().isEmpty() || cbxS.getValue() == null) {
+            if (nombre.getText().isEmpty()) {
+                a = new Alert(Alert.AlertType.INFORMATION, "INGRESE NOMBRES");
+                a.show();
+            } else if (apellido.getText().isEmpty()) {
+                a = new Alert(Alert.AlertType.INFORMATION, "INGRESE APELLIDOS");
+                a.show();
+            } else if (cbxS.getValue() == null) {
+                a = new Alert(Alert.AlertType.INFORMATION, "SELECCIONE");
+                a.show();
             }
-            else if(apellido.getText().isEmpty()){
-                Alert a2=new Alert(Alert.AlertType.INFORMATION,"INGRESE APELLIDOS");
-                a2.show();
-            }
-            else if(cbxS.getValue()==null){
-                Alert a3=new Alert(Alert.AlertType.INFORMATION,"SELECCIONE");
-                a3.show();
-            }
-                
-        Alert a=new Alert(Alert.AlertType.INFORMATION,"INGRESE DATOS");
-        a.show();
-        }else{
-            Medico medico = new Medico(nombre.getText(),apellido.getText(),cbxS.getValue().toString());
+
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "INGRESE DATOS");
+            a.show();
+        } else {
+            Medico medico = new Medico(nombre.getText(), apellido.getText(), cbxS.getValue().toString());
             Map<String, Usuario> medicos = Medico.leer("medicos.ser");
             medicos.put(medico.getNombres(), medico);
-            Medico.guardar(medicos,"medicos.ser");
-            
-        }           
+            Medico.guardar(medicos, "medicos.ser");
+
+        }
         nombre.clear();
         apellido.clear();
-        cbxS.setValue("");          
+        cbxS.setValue("");
     }
 
     @FXML
     private void puesto(MouseEvent event) {
         try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("PuestoFXML");
-            App.setRoot(fxmlloader1);
-            PuestoFXMLController controlador=fxmlloader1.getController();
+            fxmlloader = App.loadFXMLoad("PuestoFXML");
+            App.setRoot(fxmlloader);
+            PuestoFXMLController controlador = fxmlloader.getController();
 
-            } catch (IOException ex) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
-                a.show();
-            }            
+        } catch (IOException ex) {
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a.show();
+        }
     }
 
 }
