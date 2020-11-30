@@ -59,22 +59,22 @@ public class VentanaFXMLController implements Initializable {
         turnos.sort((Turno t1, Turno t2)
                 -> t2.getPaciente().getSintoma().getPrioridad() - t1.getPaciente().getSintoma().getPrioridad());
         ArrayList<String> items = new ArrayList<>();
-        ArrayList<String> items1 = new ArrayList<>();
         edad.setTextFormatter(new TextFormatter<>(change -> (change.getControlNewText().matches("(-?([0-9]*+[.])?[0-9]*)")) ? change : null));
         items.add("M");
         items.add("F");
         cbxG.setItems(FXCollections.observableArrayList(items));
-        items1.add("Fiebre");
-        items1.add("Desmayo");
-        items1.add("Resfriado");
-        items1.add("Congestión nasal");
-        items1.add("Dolor de estómago");
-        items1.add("Dolor de cabeza");
-        items1.add("Dolor de pecho");
-        items1.add("Escalofrío");
-        items1.add("tos");
-        items1.add("Infarto");
-        cbxS.setItems(FXCollections.observableArrayList(items1));
+        items.clear();
+        items.add("Fiebre");
+        items.add("Desmayo");
+        items.add("Resfriado");
+        items.add("Congestión nasal");
+        items.add("Dolor de estómago");
+        items.add("Dolor de cabeza");
+        items.add("Dolor de pecho");
+        items.add("Escalofrío");
+        items.add("tos");
+        items.add("Infarto");
+        cbxS.setItems(FXCollections.observableArrayList(items));
     }
 
     @FXML
@@ -118,32 +118,16 @@ public class VentanaFXMLController implements Initializable {
 
     @FXML
     private void registrar(MouseEvent event) {
-        if (nombre.getText().isEmpty() || apellido.getText().isEmpty() || cbxS.getValue() == null) {
-            if (nombre.getText().isEmpty()) {
-                a = new Alert(Alert.AlertType.INFORMATION, "INGRESE NOMBRES");
-                a.show();
-            } else if (apellido.getText().isEmpty()) {
-                a = new Alert(Alert.AlertType.INFORMATION, "INGRESE APELLIDOS");
-                a.show();
-            } else if (edad.getText().isEmpty()) {
-                a = new Alert(Alert.AlertType.INFORMATION, "INGRESE EDAD");
-                a.show();
-            } else if (cbxG.getValue() == null) {
-                a = new Alert(Alert.AlertType.INFORMATION, "SELECCIONE");
-                a.show();
-
-            } else if (cbxS.getValue() == null) {
-                a = new Alert(Alert.AlertType.INFORMATION, "SELECCIONE");
-                a.show();
-
-            }
-
-            a = new Alert(Alert.AlertType.INFORMATION, "INGRESE DATOS");
+        Puesto p = puestos.poll();
+        if (nombre.getText().isEmpty() || cbxG.getValue() == null || apellido.getText().isEmpty()
+                || edad.getText().isEmpty() || cbxS.getValue() == null) {
+            a = new Alert(Alert.AlertType.INFORMATION, "CAMPOS VACIOS");
             a.show();
-
+        } else if (puestos.isEmpty()) {
+            a = new Alert(Alert.AlertType.INFORMATION, "NO EXISTEN PUESTOS");
+            a.show();
         } else {
             Paciente paciente = new Paciente(nombre.getText(), apellido.getText(), Integer.parseInt(edad.getText()), cbxG.getValue().toString().charAt(0), sintomas.get(cbxS.getValue().toString()));
-            Puesto p = puestos.poll();
             int tamaño = p.getTurnos().size();
             char inicial1 = p.getMedico().getNombres().charAt(0);
             char inicial2 = p.getMedico().getApellidos().charAt(0);

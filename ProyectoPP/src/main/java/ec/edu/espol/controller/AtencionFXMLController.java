@@ -5,11 +5,11 @@
  */
 package ec.edu.espol.controller;
 
+import ec.edu.espol.model.util.Video;
 import ec.edu.espol.gui.App;
-import ec.edu.espol.model.CircularDoublyLinkedList;
-import ec.edu.espol.model.Reloj;
+import ec.edu.espol.model.listas.CircularDoublyLinkedList;
+import ec.edu.espol.model.util.Reloj;
 import ec.edu.espol.model.Turno;
-import ec.edu.espol.model.Video;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -55,7 +55,7 @@ public class AtencionFXMLController implements Initializable {
     LinkedList<Turno> turnos = Turno.leer("turnos.ser");
     private Reloj reloj;
     private final CircularDoublyLinkedList<String> videos = Video.leer("videos.txt");
-    private Iterator it = videos.iterator();
+    private final Iterator it = videos.iterator();
 
     @FXML
     private MediaView ventanaVideo;

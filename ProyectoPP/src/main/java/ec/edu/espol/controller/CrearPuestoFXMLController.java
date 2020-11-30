@@ -111,7 +111,10 @@ public class CrearPuestoFXMLController implements Initializable {
             puestos.offer(p);
             Puesto.guardar(puestos, "puestos.ser");
             Medico.guardar(medicos, "medicos.ser");
+            cbxM.getItems().clear();
+            cbxM.setItems(FXCollections.observableArrayList(Medico.nombresMedicos()));
         }
+        
     }
 
 }

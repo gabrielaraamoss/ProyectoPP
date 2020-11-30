@@ -9,5 +9,6 @@ module ec.edu.espol.gui {
     exports ec.edu.espol.gui;
     exports ec.edu.espol.controller;
     exports ec.edu.espol.model;
+    exports ec.edu.espol.model.util;
 
 }

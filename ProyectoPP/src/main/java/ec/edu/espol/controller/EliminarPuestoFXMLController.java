@@ -86,16 +86,17 @@ public class EliminarPuestoFXMLController implements Initializable {
             RegistroMedicoFXMLController controlador = fxmlloader.getController();
 
         } catch (IOException ex) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
+            a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
         }
-
     }
 
     @FXML
     private void eliminarPuesto(MouseEvent event) {
         int codigo = Integer.parseInt(cbxM.getValue().toString());
         Puesto.eliminar(codigo, "puestos.ser");
+        cbxM.getItems().clear();
+        cbxM.setItems(FXCollections.observableArrayList(Puesto.codigosPuesto("puestos.ser")));
 
     }
 

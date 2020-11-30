@@ -64,10 +64,8 @@ public class Puesto implements Serializable {
         try(ObjectOutputStream es = new ObjectOutputStream(new FileOutputStream(archivo))){
                     es.writeObject(cola);
         }catch (FileNotFoundException e){
-            System.out.println("e1");
             System.out.println(e.getMessage());
         }catch(IOException e){
-            System.out.println("e2");
             System.out.println(e.getMessage());
         }
     

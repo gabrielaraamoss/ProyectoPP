@@ -1,4 +1,6 @@
-package ec.edu.espol.model;
+package ec.edu.espol.model.listas;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.

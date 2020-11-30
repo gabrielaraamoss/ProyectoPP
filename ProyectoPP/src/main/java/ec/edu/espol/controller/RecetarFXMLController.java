@@ -45,7 +45,6 @@ public class RecetarFXMLController implements Initializable {
         paciente.setText(turn.getPaciente().getNombres() + " " + turn.getPaciente().getApellidos());
         medico.setText(turn.getPuesto().getMedico().getNombres());
         turno.setText(turn.getCodigo());
-
     }
 
     @FXML

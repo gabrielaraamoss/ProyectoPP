@@ -101,18 +101,7 @@ public class RegistroMedicoFXMLController implements Initializable {
     @FXML
     private void registrar(MouseEvent event) {
         if (nombre.getText().isEmpty() || apellido.getText().isEmpty() || cbxS.getValue() == null) {
-            if (nombre.getText().isEmpty()) {
-                a = new Alert(Alert.AlertType.INFORMATION, "INGRESE NOMBRES");
-                a.show();
-            } else if (apellido.getText().isEmpty()) {
-                a = new Alert(Alert.AlertType.INFORMATION, "INGRESE APELLIDOS");
-                a.show();
-            } else if (cbxS.getValue() == null) {
-                a = new Alert(Alert.AlertType.INFORMATION, "SELECCIONE");
-                a.show();
-            }
-
-            Alert a = new Alert(Alert.AlertType.INFORMATION, "INGRESE DATOS");
+            a = new Alert(Alert.AlertType.INFORMATION, "CAMPOS VACIOS");
             a.show();
         } else {
             Medico medico = new Medico(nombre.getText(), apellido.getText(), cbxS.getValue().toString());
