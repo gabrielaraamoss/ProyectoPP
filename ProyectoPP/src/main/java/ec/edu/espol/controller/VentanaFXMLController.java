@@ -117,7 +117,7 @@ public class VentanaFXMLController implements Initializable {
     }
 
     @FXML
-    private void registrar(MouseEvent event) {
+    private void registrar(MouseEvent event) throws InterruptedException {
         Puesto p = puestos.poll();
         if (nombre.getText().isEmpty() || cbxG.getValue() == null || apellido.getText().isEmpty()
                 || edad.getText().isEmpty() || cbxS.getValue() == null) {
@@ -141,6 +141,8 @@ public class VentanaFXMLController implements Initializable {
             Paciente.guardar(pacientes, "pacientes.ser");
             puestos.offer(p);
             Puesto.guardar(puestos, "puestos.ser");
+            a = new Alert(Alert.AlertType.CONFIRMATION, paciente.getNombres()+" SE LE ASIGNA EL TURNO: "+ codTurno);
+            a.show();
             try {
                 fxmlloader = App.loadFXMLoad("AtencionFXML");
                 App.setRoot(fxmlloader);
