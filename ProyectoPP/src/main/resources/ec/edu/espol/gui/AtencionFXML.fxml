@@ -5,6 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -16,56 +17,24 @@
             <Font name="Times New Roman Bold" size="28.0" />
          </font>
       </Text>
-      <SplitPane dividerPositions="0.5" layoutY="41.0" prefHeight="315.0" prefWidth="600.0" style="-fx-background-color: white; -fx-border-color: white;">
+      <SplitPane layoutY="41.0" prefHeight="315.0" prefWidth="600.0" style="-fx-background-color: white; -fx-border-color: white;">
         <items>
-          <AnchorPane fx:id="video" minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="304.0">
+          <AnchorPane fx:id="video" minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="317.0">
                <children>
-                  <MediaView fx:id="ventanaVideo" fitHeight="200.0" fitWidth="300.0" layoutX="-1.0" layoutY="55.0" />
-               </children></AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <Label alignment="CENTER" layoutX="24.0" layoutY="52.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: SandyBrown;" text="TURNO" textAlignment="CENTER" textFill="WHITE">
+                  <VBox fx:id="vBoxTurno" layoutX="316.0" layoutY="74.0" prefHeight="233.0" prefWidth="129.0" spacing="5.0" />
+                  <VBox fx:id="vBoxPuesto" layoutX="452.0" layoutY="74.0" prefHeight="233.0" prefWidth="129.0" spacing="3.0" />
+                  <Label alignment="CENTER" layoutX="315.0" layoutY="19.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: SandyBrown;" text="TURNO" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Label>
-                  <Label fx:id="turno1" alignment="CENTER" layoutX="24.0" layoutY="110.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: SandyBrown;" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="turno3" alignment="CENTER" layoutX="24.0" layoutY="229.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: SandyBrown;" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="turno2" alignment="CENTER" layoutX="24.0" layoutY="169.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: SandyBrown;" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" layoutX="160.0" layoutY="52.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: LightSalmon;" text="PUESTO" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="453.0" layoutY="19.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: LightSalmon;" text="PUESTO" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="29.0" />
                      </font>
                   </Label>
-                  <Label fx:id="puesto1" alignment="CENTER" layoutX="160.0" layoutY="110.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: LightSalmon;" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Italic" size="29.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="puesto2" alignment="CENTER" layoutX="160.0" layoutY="169.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: LightSalmon;" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Italic" size="29.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="puesto3" alignment="CENTER" layoutX="160.0" layoutY="229.0" prefHeight="52.0" prefWidth="129.0" style="-fx-background-color: LightSalmon;" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Italic" size="29.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
+                  <MediaView fx:id="ventanaVideo" fitHeight="170.0" fitWidth="280.0" layoutX="14.0" layoutY="71.0" />
+               </children></AnchorPane>
         </items>
       </SplitPane>
       <Label alignment="CENTER" layoutX="22.0" layoutY="356.0" prefHeight="17.0" prefWidth="549.0" style="-fx-background-color: SandyBrown;" text="Horario de atención de Lunes a Viernes de 08:00 a 20:00" textFill="#f8f5f5">
@@ -78,10 +47,5 @@
             <Image url="@../../../../Imagenes/41hwNl3V9PL.png" />
          </image>
       </ImageView>
-      <Text fill="#dd3207" layoutX="3.0" layoutY="31.0" onMouseClicked="#regresar" strokeType="OUTSIDE" strokeWidth="0.0" text="⬅" wrappingWidth="24.22265625">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

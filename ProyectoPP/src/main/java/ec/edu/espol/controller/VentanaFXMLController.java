@@ -11,6 +11,7 @@ import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.Sintoma;
 import ec.edu.espol.model.Turno;
 import ec.edu.espol.model.Usuario;
+import ec.edu.espol.model.util.VentanaTurnos;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,11 +46,12 @@ public class VentanaFXMLController implements Initializable {
     private ComboBox cbxG;
     @FXML
     private ComboBox cbxS;
-    FXMLLoader fxmlloader;
-    Queue<Puesto> puestos = Puesto.leer("puestos.ser");
-    Map<String, Sintoma> sintomas = Sintoma.leer("sintomas.ser");
-    LinkedList<Turno> turnos = Turno.leer("turnos.ser");
-    Alert a;
+    private FXMLLoader fxmlloader;
+    private final Queue<Puesto> puestos = Puesto.leer("puestos.ser");
+    private final Map<String, Sintoma> sintomas = Sintoma.leer("sintomas.ser");
+    private final LinkedList<Turno> turnos = Turno.leer("turnos.ser");
+    private Alert a;
+    
 
     /**
      * Initializes the controller class.
@@ -82,7 +84,6 @@ public class VentanaFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("PrincipalFXML");
             App.setRoot(fxmlloader);
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             a.show();
@@ -123,9 +124,6 @@ public class VentanaFXMLController implements Initializable {
                 || edad.getText().isEmpty() || cbxS.getValue() == null) {
             a = new Alert(Alert.AlertType.INFORMATION, "CAMPOS VACIOS");
             a.show();
-        } else if (puestos.isEmpty()) {
-            a = new Alert(Alert.AlertType.INFORMATION, "NO EXISTEN PUESTOS");
-            a.show();
         } else {
             Paciente paciente = new Paciente(nombre.getText(), apellido.getText(), Integer.parseInt(edad.getText()), cbxG.getValue().toString().charAt(0), sintomas.get(cbxS.getValue().toString()));
             int tamaño = p.getTurnos().size();
@@ -144,10 +142,7 @@ public class VentanaFXMLController implements Initializable {
             a = new Alert(Alert.AlertType.CONFIRMATION, paciente.getNombres()+" SE LE ASIGNA EL TURNO: "+ codTurno);
             a.show();
             try {
-                fxmlloader = App.loadFXMLoad("AtencionFXML");
-                App.setRoot(fxmlloader);
-                AtencionFXMLController controlador = fxmlloader.getController();
-
+                VentanaTurnos.getVentanaTurnos().show();
             } catch (IOException ex) {
                 a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
                 a.show();

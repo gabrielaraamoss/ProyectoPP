@@ -6,27 +6,24 @@
 package ec.edu.espol.controller;
 
 import ec.edu.espol.model.util.Video;
-import ec.edu.espol.gui.App;
+import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.listas.CircularDoublyLinkedList;
 import ec.edu.espol.model.util.Reloj;
 import ec.edu.espol.model.Turno;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 /**
  * FXML Controller class
@@ -40,84 +37,60 @@ public class AtencionFXMLController implements Initializable {
     @FXML
     private AnchorPane video;
     @FXML
-    private Label turno1;
+    private MediaView ventanaVideo;
     @FXML
-    private Label turno3;
+    private VBox vBoxTurno;
     @FXML
-    private Label turno2;
-    @FXML
-    private Label puesto1;
-    @FXML
-    private Label puesto2;
-    @FXML
-    private Label puesto3;
-
-    LinkedList<Turno> turnos = Turno.leer("turnos.ser");
+    private VBox vBoxPuesto;
+    
     private Reloj reloj;
     private final CircularDoublyLinkedList<String> videos = Video.leer("videos.txt");
     private final Iterator it = videos.iterator();
-
-    @FXML
-    private MediaView ventanaVideo;
+    private Queue<Puesto> puestos = Puesto.leer("puestos.ser");
+    private Label turno;
+    private Label puesto;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        turnos.sort((Turno t1, Turno t2)
-                -> t1.getPaciente().getSintoma().getPrioridad() - t2.getPaciente().getSintoma().getPrioridad());
         reloj = new Reloj(tiempo);
         reloj.start();
-        reproducirVideos(it);
-        int tamanio = turnos.size();
-        if (tamanio >= 3) {
-            Turno t = turnos.pollFirst();
-            turno1.setText(t.getCodigo());
-            puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
-            t = turnos.pollFirst();
-            turno2.setText(t.getCodigo());
-            puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
-            t = turnos.pollFirst();
-            turno3.setText(t.getCodigo());
-            puesto3.setText(String.valueOf(t.getPuesto().getCodigo()));
-
-        } else if (tamanio == 2) {
-            Turno t = turnos.pollFirst();
-            turno1.setText(t.getCodigo());
-            puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
-            t = turnos.pollFirst();
-            turno2.setText(t.getCodigo());
-            puesto2.setText(String.valueOf(t.getPuesto().getCodigo()));
-        } else {
-            Turno t = turnos.pollFirst();
-            turno1.setText(t.getCodigo());
-            puesto1.setText(String.valueOf(t.getPuesto().getCodigo()));
+        //reproducirVideos(it);
+        vBoxTurno.getChildren().clear();
+        vBoxPuesto.getChildren().clear();
+        while(!puestos.isEmpty()){
+            Puesto p = (Puesto) puestos.poll();
+            p.getTurnos().sort((Turno t1, Turno t2)
+                -> t1.getPaciente().getSintoma().getPrioridad() - t2.getPaciente().getSintoma().getPrioridad());
+            if(p.getTurnos().size()!=0){
+            turno = new Label(p.getTurnos().getFirst().getCodigo());
+            turno.setStyle("-fx-background-color: SandyBrown");
+            turno.setTextAlignment(TextAlignment.CENTER);
+            turno.setMinSize(129, 40);
+            vBoxTurno.getChildren().add(turno);
+            puesto = new Label(String.valueOf(p.getCodigo()));
+            puesto.setStyle("-fx-background-color: LightSalmon");
+            puesto.setTextAlignment(TextAlignment.CENTER);
+            puesto.setMinSize(129, 40);
+            vBoxPuesto.getChildren().add(puesto); 
+            }
         }
     }
-
-    public void reproducirVideos(Iterator it) {
+    
+     public void reproducirVideos(Iterator it) {
         String url = it.next().toString();
-        Media media = new Media(new File(url).toURI().toString());
+        Media media = new Media(url);
         MediaPlayer player = new MediaPlayer(media);
         player.setAutoPlay(true);
         player.setOnEndOfMedia(() -> {
             reproducirVideos(it);
         });
-        ventanaVideo.setMediaPlayer(player);
+        ventanaVideo.setMediaPlayer(player);    
     }
-
-    @FXML
-    private void regresar(MouseEvent event) {
-        reloj.stopHilo();
-        try {
-            FXMLLoader fxmlloader1 = App.loadFXMLoad("VentanaFXML");
-            App.setRoot(fxmlloader1);
-
-        } catch (IOException ex) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "ERROR");
-            alerta.show();
-        }
-
+    
+    public Reloj reloj(){   
+        return reloj;
     }
 }

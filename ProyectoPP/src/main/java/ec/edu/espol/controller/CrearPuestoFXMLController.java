@@ -32,10 +32,10 @@ public class CrearPuestoFXMLController implements Initializable {
 
     @FXML
     private ComboBox cbxM;
-    Alert a;
-    FXMLLoader fxmlloader;
+    private Alert a;
+    private FXMLLoader fxmlloader;
 
-    Map<String, Usuario> medicos = Medico.leer("medicos.ser");
+    private Map<String, Usuario> medicos = Medico.leer("medicos.ser");
 
     /**
      * Initializes the controller class.
@@ -50,7 +50,6 @@ public class CrearPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("PrincipalFXML");
             App.setRoot(fxmlloader);
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             a.show();
@@ -62,8 +61,6 @@ public class CrearPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader);
-            VentanaFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -75,8 +72,6 @@ public class CrearPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("PuestoFXML");
             App.setRoot(fxmlloader);
-            PuestoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -88,8 +83,6 @@ public class CrearPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("RegistroMedicoFXML");
             App.setRoot(fxmlloader);
-            RegistroMedicoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();

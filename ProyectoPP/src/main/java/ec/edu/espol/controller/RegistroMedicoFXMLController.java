@@ -55,8 +55,8 @@ public class RegistroMedicoFXMLController implements Initializable {
     @FXML
     private Label puesto3;
 
-    Alert a;
-    FXMLLoader fxmlloader;
+    private Alert a;
+    private FXMLLoader fxmlloader;
 
     /**
      * Initializes the controller class.
@@ -71,18 +71,15 @@ public class RegistroMedicoFXMLController implements Initializable {
         items.add("Neurologo");
         cbxS.setItems(FXCollections.observableArrayList(items));
     }
-
     @FXML
     private void regresar(MouseEvent event) {
         try {
             fxmlloader = App.loadFXMLoad("PrincipalFXML");
             App.setRoot(fxmlloader);
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             a.show();
         }
-
     }
 
     @FXML
@@ -90,8 +87,6 @@ public class RegistroMedicoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader);
-            VentanaFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -108,7 +103,6 @@ public class RegistroMedicoFXMLController implements Initializable {
             Map<String, Usuario> medicos = Medico.leer("medicos.ser");
             medicos.put(medico.getNombres(), medico);
             Medico.guardar(medicos, "medicos.ser");
-
         }
         nombre.clear();
         apellido.clear();
@@ -120,8 +114,6 @@ public class RegistroMedicoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("PuestoFXML");
             App.setRoot(fxmlloader);
-            PuestoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();

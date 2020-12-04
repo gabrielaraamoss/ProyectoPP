@@ -6,6 +6,7 @@
 package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
+import ec.edu.espol.model.util.VentanaTurnos;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,7 +32,12 @@ public class PrincipalFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            VentanaTurnos.getVentanaTurnos().show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -39,8 +45,6 @@ public class PrincipalFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader);
-            VentanaFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -53,12 +57,9 @@ public class PrincipalFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("RecetarFXML");
             App.setRoot(fxmlloader);
-            RecetarFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
         }
     }
-
 }

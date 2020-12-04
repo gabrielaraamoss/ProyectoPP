@@ -7,6 +7,7 @@ package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
 import ec.edu.espol.model.Puesto;
+import ec.edu.espol.model.util.VentanaTurnos;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,8 +29,8 @@ public class EliminarPuestoFXMLController implements Initializable {
     @FXML
     private ComboBox cbxM;
 
-    FXMLLoader fxmlloader;
-    Alert a;
+    private FXMLLoader fxmlloader;
+    private Alert a;
 
     /**
      * Initializes the controller class.
@@ -44,7 +45,6 @@ public class EliminarPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("PrincipalFXML");
             App.setRoot(fxmlloader);
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             a.show();
@@ -56,8 +56,6 @@ public class EliminarPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader);
-            VentanaFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -69,8 +67,6 @@ public class EliminarPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("PuestoFXML");
             App.setRoot(fxmlloader);
-            PuestoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -82,8 +78,6 @@ public class EliminarPuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("RegistroMedicoFXML");
             App.setRoot(fxmlloader);
-            RegistroMedicoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -91,12 +85,12 @@ public class EliminarPuestoFXMLController implements Initializable {
     }
 
     @FXML
-    private void eliminarPuesto(MouseEvent event) {
+    private void eliminarPuesto(MouseEvent event) throws IOException {
         int codigo = Integer.parseInt(cbxM.getValue().toString());
         Puesto.eliminar(codigo, "puestos.ser");
         cbxM.getItems().clear();
         cbxM.setItems(FXCollections.observableArrayList(Puesto.codigosPuesto("puestos.ser")));
-
+        VentanaTurnos.getVentanaTurnos().show();
     }
 
 }

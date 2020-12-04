@@ -6,10 +6,11 @@
 package ec.edu.espol.controller;
 
 import ec.edu.espol.gui.App;
+import ec.edu.espol.model.Puesto;
 import ec.edu.espol.model.Turno;
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,28 +33,31 @@ public class RecetarFXMLController implements Initializable {
     @FXML
     private Label paciente;
 
-    LinkedList<Turno> turnos = Turno.leer("turnos.ser");
+    private Queue<Puesto> puestos = Puesto.leer("puestos.ser");
+    private Puesto p;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        turnos.sort((Turno t1, Turno t2)
+        p = (Puesto) puestos.poll();
+        p.getTurnos().sort((Turno t1, Turno t2)
                 -> t1.getPaciente().getSintoma().getPrioridad() - t2.getPaciente().getSintoma().getPrioridad());
-        Turno turn = turnos.pollFirst();
-        paciente.setText(turn.getPaciente().getNombres() + " " + turn.getPaciente().getApellidos());
-        medico.setText(turn.getPuesto().getMedico().getNombres());
-        turno.setText(turn.getCodigo());
+        paciente.setText(p.getTurnos().getFirst().getPaciente().getNombres() + " " + p.getTurnos().getFirst().getPaciente().getApellidos());
+        medico.setText(p.getTurnos().getFirst().getPuesto().getMedico().getNombres());
+        turno.setText(p.getTurnos().getFirst().getCodigo());
+        
     }
 
     @FXML
-    private void registrar(MouseEvent event) {
-        Turno.guardar(turnos, "turnos.ser");
+    private void registrar(MouseEvent event) {      
         try {
+            p.getTurnos().removeFirst();
+            puestos.offer(p);
+            Puesto.guardar(puestos, "puestos.ser");
             FXMLLoader fxmlloader1 = App.loadFXMLoad("PrincipalFXML");
             App.setRoot(fxmlloader1);
-            PuestoFXMLController controlador = fxmlloader1.getController();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

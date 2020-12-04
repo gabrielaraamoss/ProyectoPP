@@ -23,8 +23,8 @@ import javafx.scene.input.MouseEvent;
  */
 public class PuestoFXMLController implements Initializable {
 
-    Alert a;
-    FXMLLoader fxmlloader;
+    private Alert a;
+    private FXMLLoader fxmlloader;
 
     /**
      * Initializes the controller class.
@@ -39,7 +39,6 @@ public class PuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("PrincipalFXML");
             App.setRoot(fxmlloader);
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "ERROR");
             a.show();
@@ -51,8 +50,6 @@ public class PuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("VentanaFXML");
             App.setRoot(fxmlloader);
-            VentanaFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -64,8 +61,6 @@ public class PuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("RegistroMedicoFXML");
             App.setRoot(fxmlloader);
-            RegistroMedicoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -77,8 +72,6 @@ public class PuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("CrearPuestoFXML");
             App.setRoot(fxmlloader);
-            CrearPuestoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
@@ -91,8 +84,6 @@ public class PuestoFXMLController implements Initializable {
         try {
             fxmlloader = App.loadFXMLoad("EliminarPuestoFXML");
             App.setRoot(fxmlloader);
-            EliminarPuestoFXMLController controlador = fxmlloader.getController();
-
         } catch (IOException ex) {
             a = new Alert(Alert.AlertType.INFORMATION, "No se puede mostrar");
             a.show();
